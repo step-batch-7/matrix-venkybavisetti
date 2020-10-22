@@ -21,7 +21,7 @@ public class Matrix {
     int[][] matrix = new int[this.rows][(secondMatrix.array)[0].length];
 
     for (int row = 0; row < this.rows; row++) {
-      for (int column = 0; column < this.columns; column++) {
+      for (int column = 0; column < secondMatrix.array[0].length; column++) {
         matrix[row][column] = 0;
         for (int position = 0; position < this.columns; position++) {
           matrix[row][column] +=
