@@ -17,15 +17,15 @@ public class Matrix {
     }
   }
 
-  public Matrix mul(int[][] secondMatrix) {
-    int[][] matrix = new int[this.rows][secondMatrix[0].length];
+  public Matrix mul(Matrix secondMatrix) {
+    int[][] matrix = new int[this.rows][(secondMatrix.array)[0].length];
 
     for (int row = 0; row < this.rows; row++) {
       for (int column = 0; column < this.columns; column++) {
         matrix[row][column] = 0;
         for (int position = 0; position < this.columns; position++) {
           matrix[row][column] +=
-            this.array[row][position] * secondMatrix[position][column];
+            this.array[row][position] * (secondMatrix.array)[position][column];
         }
       }
     }
@@ -33,26 +33,26 @@ public class Matrix {
     return new Matrix(matrix, matrix.length, matrix[0].length);
   }
 
-  public Matrix add(int[][] secondMatrix) {
+  public Matrix add(Matrix secondMatrix) {
     int[][] matrix = new int[this.rows][this.columns];
 
     for (int row = 0; row < this.rows; row++) {
       for (int column = 0; column < this.columns; column++) {
         matrix[row][column] =
-          this.array[row][column] + secondMatrix[row][column];
+          this.array[row][column] + secondMatrix.array[row][column];
       }
     }
 
     return new Matrix(matrix, matrix.length, matrix[0].length);
   }
 
-  public Matrix sub(int[][] secondMatrix) {
+  public Matrix sub(Matrix secondMatrix) {
     int[][] matrix = new int[this.rows][this.columns];
 
     for (int row = 0; row < this.rows; row++) {
       for (int column = 0; column < this.columns; column++) {
         matrix[row][column] =
-          this.array[row][column] - secondMatrix[row][column];
+          this.array[row][column] - secondMatrix.array[row][column];
       }
     }
     return new Matrix(matrix, matrix.length, matrix[0].length);
