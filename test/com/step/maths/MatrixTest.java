@@ -31,7 +31,7 @@ public class MatrixTest {
     Matrix mFirst = new Matrix(first, 2, 2);
     Matrix mFirst1 = new Matrix(first, 2, 2);
 
-    assertTrue(mFirst.equals(mFirst1));
+    assertEquals(mFirst1, mFirst);
   }
 
   @Test
