@@ -58,15 +58,15 @@ public class Matrix {
     return new Matrix(matrix, matrix.length, matrix[0].length);
   }
 
-  private static int[][] createSubMatrix(int[][] matrix, int matrixColumn) {
+  private static int[][] createSubMatrix(int[][] matrix, int parentColumn) {
     int length = matrix.length;
     int[][] subMatrix = new int[length - 1][length - 1];
 
     for (int row = 1; row < length; row++) {
       for (int column = 0; column < length; column++) {
-        int subColumn = column > matrixColumn ? column - 1 : column;
+        int subColumn = column > parentColumn ? column - 1 : column;
         int subRow = row - 1;
-        if (column != matrixColumn) {
+        if (column != parentColumn) {
           subMatrix[subRow][subColumn] = matrix[row][column];
         }
       }
@@ -75,27 +75,26 @@ public class Matrix {
     return subMatrix;
   }
 
-  private int findDeterminant(int[][] matrix) {
+  private int findDet(int[][] matrix) {
     if (matrix.length == 2) {
       return ((matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]));
     }
+    int det = 0;
 
-    int determinant = 0;
+    for (int column = 0; column < matrix.length; column++) {
+      int[][] subMatrix = createSubMatrix(matrix, column);
 
-    for (int matrixColumn = 0; matrixColumn < matrix.length; matrixColumn++) {
-      int[][] subMatrix = createSubMatrix(matrix, matrixColumn);
+      int sign = (column % 2 == 1 ? -1 : 1);
+      int detOfSubMatrix = sign * matrix[0][column] * findDet(subMatrix);
 
-      determinant +=
-        (matrixColumn % 2 == 1 ? -1 : 1) *
-        matrix[0][matrixColumn] *
-        findDeterminant(subMatrix);
+      det += detOfSubMatrix;
     }
 
-    return (determinant);
+    return (det);
   }
 
   public int determinant() {
-    return findDeterminant(this.array);
+    return findDet(this.array);
   }
 
   @Override

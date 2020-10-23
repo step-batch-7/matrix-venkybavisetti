@@ -9,31 +9,40 @@ import org.junit.Test;
 public class MatrixTest {
 
   @Test
-  public void calculateMatrixDeterminant() {
+  public void calculateMatrixDeterminantOf2_2Matrix() {
     int[][] first = { { 1, 2 }, { 1, 2 } };
-    int[][] third = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 8 } };
-
     Matrix mFirst = new Matrix(first, 2, 2);
-    Matrix mThird = new Matrix(third, 3, 3);
 
-    assertEquals("Determinant of 2*2 matrix", 0, mFirst.determinant());
-    assertEquals("Determinant of 3*3 matrix", 3, mThird.determinant());
+    assertEquals(0, mFirst.determinant());
   }
 
   @Test
-  public void checkEqualMethod() {
+  public void calculateMatrixDeterminantOf3_3Matrix() {
+    int[][] third = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 8 } };
+    Matrix mThird = new Matrix(third, 3, 3);
+
+    assertEquals(3, mThird.determinant());
+  }
+
+  @Test
+  public void checkEqualMethodForSameMatrix() {
+    int[][] first = { { 1, 2 }, { 1, 2 } };
+
+    Matrix mFirst = new Matrix(first, 2, 2);
+    Matrix mFirst1 = new Matrix(first, 2, 2);
+
+    assertTrue(mFirst.equals(mFirst1));
+  }
+
+  @Test
+  public void checkEqualMethodForDifferentMatrix() {
     int[][] first = { { 1, 2 }, { 1, 2 } };
     int[][] second = { { 2, 3 }, { 3, 2 } };
 
     Matrix mFirst = new Matrix(first, 2, 2);
-    Matrix mFirst1 = new Matrix(first, 2, 2);
     Matrix mSecond = new Matrix(second, 2, 2);
 
-    assertTrue("should be equal when equal matrix", mFirst.equals(mFirst1));
-    assertFalse(
-      "should not be equal when different matrix",
-      mFirst.equals(mSecond)
-    );
+    assertFalse(mFirst.equals(mSecond));
   }
 
   @Test
@@ -42,11 +51,11 @@ public class MatrixTest {
     Matrix mFirst = new Matrix(first, 2, 2);
 
     String string = "-----------\n1  2  \n1  2  \n-----------\n";
-    assertEquals("should be equal to the expected", string, mFirst.toString());
+    assertEquals(string, mFirst.toString());
   }
 
   @Test
-  public void additionOfTwoMatrix() {
+  public void calculateAdditionFor2_2And2_2Matrix() {
     int[][] first = { { 1, 2 }, { 1, 2 } };
     int[][] second = { { 2, 3 }, { 3, 2 } };
     int[][] expectedArray = { { 3, 5 }, { 4, 4 } };
@@ -55,15 +64,24 @@ public class MatrixTest {
     Matrix mSecond = new Matrix(second, 2, 2);
     Matrix expected = new Matrix(expectedArray, 2, 2);
 
-    assertEquals(
-      "should be equal to expected matrix (2*2 matrix)",
-      expected,
-      mFirst.add(mSecond)
-    );
+    assertEquals(expected, mFirst.add(mSecond));
   }
 
   @Test
-  public void subtractionOfTwoMatrix() {
+  public void calculateAdditionFor3_3And3_3Matrix() {
+    int[][] first = { { 1, 2, 4 }, { 1, 2, 3 }, { 2, 5, 7 } };
+    int[][] second = { { 2, 3, 3 }, { 3, 4, 2 }, { 4, 2, 5 } };
+    int[][] expectedArray = { { 3, 5, 7 }, { 4, 6, 5 }, { 6, 7, 12 } };
+
+    Matrix mFirst = new Matrix(first, 3, 3);
+    Matrix mSecond = new Matrix(second, 3, 3);
+    Matrix expected = new Matrix(expectedArray, 3, 3);
+
+    assertEquals(expected, mFirst.add(mSecond));
+  }
+
+  @Test
+  public void calculateSubtractionFor2_2And2_2Matrix() {
     int[][] first = { { 1, 2 }, { 1, 2 } };
     int[][] second = { { 2, 3 }, { 3, 2 } };
     int[][] expectedArray = { { -1, -1 }, { -2, 0 } };
@@ -72,39 +90,45 @@ public class MatrixTest {
     Matrix mSecond = new Matrix(second, 2, 2);
     Matrix expected = new Matrix(expectedArray, 2, 2);
 
-    assertEquals(
-      "should be equal to expected matrix (2*2 matrix)",
-      expected,
-      mFirst.sub(mSecond)
-    );
+    assertEquals(expected, mFirst.sub(mSecond));
   }
 
   @Test
-  public void multiplicationOfTwoMatrix() {
+  public void calculateSubtractionFor3_3And3_3Matrix() {
+    int[][] first = { { 1, 2, 5 }, { 1, 2, 4 }, { 2, 4, 6 } };
+    int[][] second = { { 2, 3, 5 }, { 3, 2, 3 }, { 3, 5, 2 } };
+    int[][] expectedArray = { { -1, -1, 0 }, { -2, 0, 1 }, { -1, -1, 4 } };
+
+    Matrix mFirst = new Matrix(first, 3, 3);
+    Matrix mSecond = new Matrix(second, 3, 3);
+    Matrix expected = new Matrix(expectedArray, 3, 3);
+
+    assertEquals(expected, mFirst.sub(mSecond));
+  }
+
+  @Test
+  public void calculateMultiplicationFor2_2And2_2Matrix() {
     int[][] first = { { 1, 2 }, { 1, 2 } };
     int[][] second = { { 2, 3 }, { 3, 2 } };
-    int[][] third = { { 2, 3 }, { 3, 2 }, { 2, 3 } };
-    int[][] four = { { 2, 1, 4 }, { 5, 2, 2 } };
-    int[][] expectedArray1 = { { 8, 7 }, { 8, 7 } };
-    int[][] expectedArray2 = { { 19, 8, 14 }, { 16, 7, 16 }, { 19, 8, 14 } };
+    int[][] expectedArray = { { 8, 7 }, { 8, 7 } };
 
     Matrix mFirst = new Matrix(first, 2, 2);
     Matrix mSecond = new Matrix(second, 2, 2);
-    Matrix mThird = new Matrix(third, 3, 2);
-    Matrix mFourth = new Matrix(four, 2, 3);
-    Matrix expected1 = new Matrix(expectedArray1, 2, 2);
-    Matrix expected2 = new Matrix(expectedArray2, 3, 3);
+    Matrix expected = new Matrix(expectedArray, 2, 2);
 
-    assertEquals(
-      "should be equal to expected matrix (2*2 and 2*2 matrix)",
-      expected1,
-      mFirst.mul(mSecond)
-    );
+    assertEquals(expected, mFirst.mul(mSecond));
+  }
 
-    assertEquals(
-      "should be equal to expected matrix (3*2 and 2*3 matrix)",
-      expected2,
-      mThird.mul(mFourth)
-    );
+  @Test
+  public void calculateMultiplicationFor3_2And2_3Matrix() {
+    int[][] first = { { 2, 3 }, { 3, 2 }, { 2, 3 } };
+    int[][] second = { { 2, 1, 4 }, { 5, 2, 2 } };
+    int[][] expectedArray = { { 19, 8, 14 }, { 16, 7, 16 }, { 19, 8, 14 } };
+
+    Matrix mThird = new Matrix(first, 3, 2);
+    Matrix mFourth = new Matrix(second, 2, 3);
+    Matrix expected = new Matrix(expectedArray, 3, 3);
+
+    assertEquals(expected, mThird.mul(mFourth));
   }
 }
