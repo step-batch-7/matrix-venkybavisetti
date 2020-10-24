@@ -84,7 +84,7 @@ public class Matrix {
     for (int column = 0; column < matrix.length; column++) {
       int[][] subMatrix = createSubMatrix(matrix, column);
 
-      int sign = (column % 2 == 1 ? -1 : 1);
+      int sign = (int) Math.pow(-1, column);
       int detOfSubMatrix = sign * matrix[0][column] * findDet(subMatrix);
 
       det += detOfSubMatrix;
@@ -95,6 +95,14 @@ public class Matrix {
 
   public int determinant() {
     return findDet(this.array);
+  }
+
+  @Override
+  public boolean equals(Object expectedArr) {
+    if (!(expectedArr instanceof Matrix)) return false;
+    int[][] expArr = ((Matrix) expectedArr).array;
+
+    return Arrays.deepEquals(expArr, this.array);
   }
 
   @Override
@@ -109,13 +117,5 @@ public class Matrix {
     }
     builder.append("-----------\n");
     return builder.toString();
-  }
-
-  @Override
-  public boolean equals(Object expectedArr) {
-    if (!(expectedArr instanceof Matrix)) return false;
-    int[][] expArr = ((Matrix) expectedArr).array;
-
-    return Arrays.deepEquals(expArr, this.array);
   }
 }
